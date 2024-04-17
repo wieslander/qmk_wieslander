@@ -35,22 +35,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       ___,      ___,        ___,      ___
     ),
     [PUN] = LAYOUT(
-        G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  TO(BASE),   XXX,      KC_SCLN,  KC_TILD,  KC_GRV,   XXX,
-        OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, TO(WIN),    KC_EQL,   KC_COLN,  KC_COMM,  KC_MINS,  KC_UNDS,
+        G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  TO(BASE),   KC_PIPE,  KC_TILD,  KC_HASH,  KC_UNDS,  XXX,
+        OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, TO(WIN),    KC_EQL,   KC_COLN,  KC_COMM,  KC_SCLN,  KC_MINS,
         G(KC_Z),  G(KC_X),  G(KC_C),  TT(NAV),  G(KC_V),    UPDIR,    KC_EXLM,  KC_AT,    KC_SLSH,  KC_BSLS,
                                       ___,      ___,        NEXTSEN,  MO(FUN)
     ),
     [SYM] = LAYOUT(
-        XXX,      XXX,      KC_DQT,   KC_QUOT,  XXX,        XXX,      XXX,      XXX,      XXX,      XXX,
-        XXX,      KC_LBRC,  KC_LPRN,  KC_LCBR,  KC_TAB,     XXX,      OSM_RSFT, OSM_RCMD, OSM_ROPT, OSM_RCTL,
-        XXX,      KC_RBRC,  KC_RPRN,  KC_RCBR,  XXX,        XXX,      KC_VOLD,  KC_MUTE,  KC_VOLU,  XXX,
+        XXX,      KC_GRV,   KC_DQT,   KC_QUOT,  XXX,        XXX,      XXX,      XXX,      XXX,      XXX,
+        KC_LT,    KC_LBRC,  KC_LPRN,  KC_LCBR,  KC_TAB,     XXX,      OSM_RSFT, OSM_RCMD, OSM_ROPT, OSM_RCTL,
+        KC_GT,    KC_RBRC,  KC_RPRN,  KC_RCBR,  XXX,        XXX,      KC_VOLD,  KC_MUTE,  KC_VOLU,  XXX,
                                       TT(NUM),  KC_BSPC,    ___,      ___
     ),
     [NUM] = LAYOUT(
-        XXX,      XXX,      XXX,      XXX,      XXX,        KC_COLN,  KC_7,     KC_8,     KC_9,     KC_MINS,
-        OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, XXX,        KC_COMM,  KC_4,     KC_5,     KC_6,     KC_EQL,
+        XXX,      XXX,      XXX,      XXX,      XXX,        KC_COLN,  KC_7,     KC_8,     KC_9,     KC_EQL,
+        OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, XXX,        KC_COMM,  KC_4,     KC_5,     KC_6,     KC_MINS,
         XXX,      XXX,      XXX,      TT(NAV),  XXX,        KC_DOT,   KC_1,     KC_2,     KC_3,     KC_SLSH,
-                                      TO(BASE), ___,        KC_DOT,   KC_0
+                                      TO(BASE), ___,        KC_SPC,   KC_0
     ),
     [NAV] = LAYOUT(
         XXX,      ___,      XXX,      XXX,      ___,        KC_PGDN,  KC_HOME,  KC_END,   KC_PGUP,  XXX,
