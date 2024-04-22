@@ -11,8 +11,7 @@ enum layers {
 };
 
 enum custom_keycodes {
-    UPDIR = SAFE_RANGE,
-    NEXTSEN,
+    NEXTSEN = SAFE_RANGE,
     WIN_ARING,
     WIN_OUML,
     WIN_AUML,
@@ -25,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT(
         KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,       KC_J,     KC_L,     KC_U,    KC_Y,    MAC_ARING,
         KC_A,     KC_R,     KC_S,     KC_T,     KC_G,       KC_M,     KC_N,     KC_E,    KC_I,    KC_O,
-        KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,       KC_K,     KC_H,     MAC_AUML,KC_DOT,  MAC_OUML,
+        KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,       KC_K,     KC_H,     MAC_AUML,DOT_CDUP,MAC_OUML,
                                       MO(PUN),  QK_REP,     KC_SPC,   MO(SYM)
     ),
     [WIN] = LAYOUT(
@@ -35,9 +34,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       ___,      ___,        ___,      ___
     ),
     [PUN] = LAYOUT(
-        G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  TO(BASE),   KC_PIPE,  KC_TILD,  KC_HASH,  KC_UNDS,  XXX,
-        OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, TO(WIN),    KC_EQL,   KC_COLN,  KC_COMM,  KC_SCLN,  KC_MINS,
-        G(KC_Z),  G(KC_X),  G(KC_C),  TT(NAV),  G(KC_V),    UPDIR,    KC_EXLM,  KC_AT,    KC_SLSH,  KC_BSLS,
+        G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  TO(BASE),   XXX,      KC_TILD,  KC_HASH,  KC_UNDS,  XXX,
+        OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, TO(WIN),    EQL_PAD,  KC_COLN,  KC_COMM,  KC_SCLN,  KC_MINS,
+        G(KC_Z),  G(KC_X),  G(KC_C),  TT(NAV),  G(KC_V),    KC_PIPE,  KC_EXLM,  KC_AT,    KC_SLSH,  KC_BSLS,
                                       ___,      ___,        NEXTSEN,  MO(FUN)
     ),
     [SYM] = LAYOUT(
@@ -66,20 +65,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+static bool process_tap_or_long_press_send_string(keyrecord_t* record, char* long_press_string) {
+    if (!record->tap.count) {
+        if (record->event.pressed) {
+            SEND_STRING(long_press_string);
+        }
+        return false;
+    }
+    return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     uint8_t mod_state = get_mods();
     uint8_t oneshot_mod_state = get_oneshot_mods();
 
     switch (keycode) {
+        case DOT_CDUP:
+            return process_tap_or_long_press_send_string(record, "../");
+        case EQL_PAD:
+            return process_tap_or_long_press_send_string(record, " = ");
         case NEXTSEN:  // Next sentence macro.
             if (record->event.pressed) {
                 SEND_STRING(". ");
                 add_oneshot_mods(MOD_BIT(KC_LSFT));  // Set one-shot mod for shift.
-            }
-            return false;
-        case UPDIR:
-            if (record->event.pressed) {
-                SEND_STRING("../");
             }
             return false;
         case WIN_ARING:

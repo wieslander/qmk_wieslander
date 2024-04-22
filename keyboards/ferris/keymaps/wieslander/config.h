@@ -19,3 +19,6 @@
 #define OSM_ROPT OSM(MOD_RALT)
 #define OSM_RCMD OSM(MOD_RGUI)
 #define OSM_RSFT OSM(MOD_RSFT)
+
+#define DOT_CDUP LT(0, KC_DOT)
+#define EQL_PAD LT(0, KC_EQL)
