@@ -35,15 +35,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       ___,      ___,        ___,      ___
     ),
     [PUN] = LAYOUT(
-        G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  TO(BASE),   XXX,      KC_TILD,  KC_HASH,  KC_UNDS,  XXX,
+        G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  TO(BASE),   KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
         OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, TO(WIN),    EQL_PAD,  KC_COLN,  KC_COMM,  KC_SCLN,  KC_MINS,
-        G(KC_Z),  G(KC_X),  G(KC_C),  TT(NAV),  G(KC_V),    KC_PIPE,  KC_EXLM,  KC_AT,    KC_SLSH,  KC_BSLS,
+        G(KC_Z),  G(KC_X),  G(KC_C),  TT(NAV),  G(KC_V),    KC_PIPE,  KC_SLSH,  KC_QUOT,  KC_TILD,  KC_BSLS,
                                       ___,      ___,        NEXTSEN,  MO(FUN)
     ),
     [SYM] = LAYOUT(
-        XXX,      KC_GRV,   KC_DQT,   KC_QUOT,  XXX,        XXX,      XXX,      XXX,      XXX,      XXX,
+        KC_1,     KC_2,     KC_3,     KC_4,     KC_5,       XXX,      XXX,      XXX,      XXX,      XXX,
         KC_LT,    KC_LBRC,  KC_LPRN,  KC_LCBR,  KC_TAB,     XXX,      OSM_RSFT, OSM_RCMD, OSM_ROPT, OSM_RCTL,
-        KC_GT,    KC_RBRC,  KC_RPRN,  KC_RCBR,  XXX,        XXX,      KC_VOLD,  KC_MUTE,  KC_VOLU,  XXX,
+        KC_GT,    KC_RBRC,  KC_RPRN,  KC_RCBR,  KC_GRV,     XXX,      KC_VOLD,  KC_MUTE,  KC_VOLU,  XXX,
                                       TT(NUM),  KC_BSPC,    ___,      ___
     ),
     [NUM] = LAYOUT(
