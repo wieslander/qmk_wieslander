@@ -12,6 +12,7 @@ enum layers {
 
 enum custom_keycodes {
     NEXTSEN = SAFE_RANGE,
+    CLEAR,
     WIN_ARING,
     WIN_OUML,
     WIN_AUML,
@@ -49,19 +50,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXX,      XXX,      XXX,      XXX,      XXX,        KC_COLN,  KC_7,     KC_8,     KC_9,     KC_EQL,
         OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, XXX,        KC_COMM,  KC_4,     KC_5,     KC_6,     KC_MINS,
         XXX,      XXX,      XXX,      TT(NAV),  XXX,        KC_DOT,   KC_1,     KC_2,     KC_3,     KC_SLSH,
-                                      TO(BASE), ___,        KC_SPC,   KC_0
+                                      ___,      ___,        KC_SPC,   KC_0
     ),
     [NAV] = LAYOUT(
         XXX,      ___,      XXX,      XXX,      ___,        KC_PGDN,  KC_HOME,  KC_END,   KC_PGUP,  XXX,
         OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, XXX,        KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  XXX,
         G(KC_Z),  G(KC_X),  G(KC_C),  XXX,      G(KC_V),    XXX,      XXX,      XXX,      XXX,      XXX,
-                                      TO(BASE), ___,        NEXTSEN,  MO(FUN)
+                                      ___,      ___,        NEXTSEN,  MO(FUN)
     ),
     [FUN] = LAYOUT(
         KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXX,        ___,      QK_BOOT,  QK_MAKE,  ___,      ___,
         KC_F5,    KC_F6,    KC_F7,    KC_F8,    XXX,        ___,      OSM_RSFT, OSM_RCMD, OSM_ROPT, OSM_RCTL,
         KC_F1,    KC_F2,    KC_F3,    KC_F4,    XXX,        ___,      ___,      ___,      ___,      ___,
-                                      TO(BASE), ___,        ___,      ___
+                                      ___,      ___,        ___,      ___
     )
 };
 
@@ -88,6 +89,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 SEND_STRING(". ");
                 add_oneshot_mods(MOD_BIT(KC_LSFT));  // Set one-shot mod for shift.
+            }
+            return false;
+        case CLEAR:
+            if (record->event.pressed) {
+                clear_keyboard();
+                layer_clear();
             }
             return false;
         case WIN_ARING:
