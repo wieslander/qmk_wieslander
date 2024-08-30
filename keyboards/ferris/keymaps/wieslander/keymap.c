@@ -19,6 +19,7 @@ enum custom_keycodes {
 };
 
 #include "g/keymap_combo.h"
+#include "keymap.h"
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -66,6 +67,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+bool num_lock = false;
+
 static bool process_tap_or_long_press_send_string(keyrecord_t* record, char* long_press_string) {
     if (!record->tap.count) {
         if (record->event.pressed) {
@@ -99,6 +102,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case WIN_ARING:
             if (record->event.pressed) {
+                set_num_lock();
                 register_code(KC_LALT);
                 if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
                     del_mods(MOD_MASK_SHIFT);
@@ -118,6 +122,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case WIN_AUML:
             if (record->event.pressed) {
+                set_num_lock();
                 register_code(KC_LALT);
                 if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
                     del_mods(MOD_MASK_SHIFT);
@@ -137,6 +142,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case WIN_OUML:
             if (record->event.pressed) {
+                set_num_lock();
                 register_code(KC_LALT);
                 if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
                     del_mods(MOD_MASK_SHIFT);
@@ -163,4 +169,20 @@ bool process_detected_host_os_user(os_variant_t detected_os) {
         layer_on(WIN);
     }
     return true;
+}
+
+bool led_update_user(led_t led_state) {
+    num_lock = led_state.num_lock;
+    return true;
+}
+
+void keyboard_post_init_user(void) {
+    led_t led_state = host_keyboard_led_state();
+    num_lock = led_state.num_lock;
+}
+
+void set_num_lock(void) {
+    if (!num_lock) {
+        tap_code(KC_NUM);
+    }
 }
