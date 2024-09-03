@@ -68,6 +68,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool num_lock = false;
+uint16_t WIN_ARING_UPPER[] = {KC_P1, KC_P4, KC_P3, 0};
+uint16_t WIN_ARING_LOWER[] = {KC_P0, KC_P2, KC_P2, KC_P9, 0};
+uint16_t WIN_AUML_UPPER[]  = {KC_P1, KC_P4, KC_P2, 0};
+uint16_t WIN_AUML_LOWER[]  = {KC_P0, KC_P2, KC_P2, KC_P8, 0};
+uint16_t WIN_OUML_UPPER[]  = {KC_P1, KC_P5, KC_P3, 0};
+uint16_t WIN_OUML_LOWER[]  = {KC_P0, KC_P2, KC_P4, KC_P6, 0};
 
 static bool process_tap_or_long_press_send_string(keyrecord_t* record, char* long_press_string) {
     if (!record->tap.count) {
@@ -80,9 +86,6 @@ static bool process_tap_or_long_press_send_string(keyrecord_t* record, char* lon
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    uint8_t mod_state = get_mods();
-    uint8_t oneshot_mod_state = get_oneshot_mods();
-
     switch (keycode) {
         case DOT_CDUP:
             return process_tap_or_long_press_send_string(record, "../");
@@ -101,65 +104,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         case WIN_ARING:
-            if (record->event.pressed) {
-                set_num_lock();
-                register_code(KC_LALT);
-                if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
-                    del_mods(MOD_MASK_SHIFT);
-                    del_oneshot_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_P1);
-                    tap_code(KC_P4);
-                    tap_code(KC_P3);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P2);
-                    tap_code(KC_P9);
-                }
-                unregister_code(KC_LALT);
-            }
-            return false;
+            return process_win_alt_keycodes(record, WIN_ARING_LOWER, WIN_ARING_UPPER);
         case WIN_AUML:
-            if (record->event.pressed) {
-                set_num_lock();
-                register_code(KC_LALT);
-                if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
-                    del_mods(MOD_MASK_SHIFT);
-                    del_oneshot_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_P1);
-                    tap_code(KC_P4);
-                    tap_code(KC_P2);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P2);
-                    tap_code(KC_P8);
-                }
-                unregister_code(KC_LALT);
-            }
-            return false;
+            return process_win_alt_keycodes(record, WIN_AUML_LOWER, WIN_AUML_UPPER);
         case WIN_OUML:
-            if (record->event.pressed) {
-                set_num_lock();
-                register_code(KC_LALT);
-                if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
-                    del_mods(MOD_MASK_SHIFT);
-                    del_oneshot_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_P1);
-                    tap_code(KC_P5);
-                    tap_code(KC_P3);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P4);
-                    tap_code(KC_P6);
-                }
-                unregister_code(KC_LALT);
-            }
-            return false;
+            return process_win_alt_keycodes(record, WIN_OUML_LOWER, WIN_OUML_UPPER);
     }
     return true;
 }
@@ -184,5 +133,35 @@ void keyboard_post_init_user(void) {
 void set_num_lock(void) {
     if (!num_lock) {
         tap_code(KC_NUM);
+    }
+}
+
+bool process_win_alt_keycodes(
+    keyrecord_t *record,
+    uint16_t *alt_code_lower,
+    uint16_t *alt_code_upper
+) {
+    uint16_t mod_state = get_mods();
+    uint16_t oneshot_mod_state = get_oneshot_mods();
+
+    if (record->event.pressed) {
+        set_num_lock();
+        register_code(KC_LALT);
+        if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
+            del_mods(MOD_MASK_SHIFT);
+            del_oneshot_mods(MOD_MASK_SHIFT);
+            tap_alt_code(alt_code_upper);
+            set_mods(mod_state);
+        } else {
+            tap_alt_code(alt_code_lower);
+        }
+        unregister_code(KC_LALT);
+    }
+    return false;
+}
+
+void tap_alt_code(uint16_t *alt_code) {
+    for (uint8_t index = 0; alt_code[index] != 0; ++index) {
+        tap_code(alt_code[index]);
     }
 }
