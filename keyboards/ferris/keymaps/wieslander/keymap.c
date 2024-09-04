@@ -1,23 +1,6 @@
 #include QMK_KEYBOARD_H
+#include <stdint.h>
 
-enum layers {
-    BASE, // Default layer - Colemak DH Swedish
-    WIN,  // Default layer, Windows version
-    PUN,  // Punctuation
-    SYM,  // Symbols
-    NUM,  // Numbers
-    NAV,  // Navigation
-    FUN,  // Function keys
-};
-
-enum custom_keycodes {
-    CLEAR = SAFE_RANGE,
-    WIN_ARING,
-    WIN_OUML,
-    WIN_AUML,
-};
-
-#include "g/keymap_combo.h"
 #include "keymap.h"
 
 // clang-format off
@@ -84,6 +67,42 @@ static bool process_tap_or_long_press_send_string(keyrecord_t* record, char* lon
     return true;
 }
 
+static void set_num_lock(void) {
+    if (!num_lock) {
+        tap_code(KC_NUM);
+    }
+}
+
+static void tap_alt_code(uint16_t *alt_code) {
+    for (uint8_t index = 0; alt_code[index] != 0; ++index) {
+        tap_code(alt_code[index]);
+    }
+}
+
+static bool process_win_alt_keycodes(
+    keyrecord_t *record,
+    uint16_t *alt_code_lower,
+    uint16_t *alt_code_upper
+) {
+    uint16_t mod_state = get_mods();
+    uint16_t oneshot_mod_state = get_oneshot_mods();
+
+    if (record->event.pressed) {
+        set_num_lock();
+        register_code(KC_LALT);
+        if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
+            del_mods(MOD_MASK_SHIFT);
+            del_oneshot_mods(MOD_MASK_SHIFT);
+            tap_alt_code(alt_code_upper);
+            set_mods(mod_state);
+        } else {
+            tap_alt_code(alt_code_lower);
+        }
+        unregister_code(KC_LALT);
+    }
+    return false;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case DOT_CDUP:
@@ -123,38 +142,3 @@ void keyboard_post_init_user(void) {
     num_lock = led_state.num_lock;
 }
 
-void set_num_lock(void) {
-    if (!num_lock) {
-        tap_code(KC_NUM);
-    }
-}
-
-bool process_win_alt_keycodes(
-    keyrecord_t *record,
-    uint16_t *alt_code_lower,
-    uint16_t *alt_code_upper
-) {
-    uint16_t mod_state = get_mods();
-    uint16_t oneshot_mod_state = get_oneshot_mods();
-
-    if (record->event.pressed) {
-        set_num_lock();
-        register_code(KC_LALT);
-        if ((mod_state & MOD_MASK_SHIFT) || (oneshot_mod_state & MOD_MASK_SHIFT)) {
-            del_mods(MOD_MASK_SHIFT);
-            del_oneshot_mods(MOD_MASK_SHIFT);
-            tap_alt_code(alt_code_upper);
-            set_mods(mod_state);
-        } else {
-            tap_alt_code(alt_code_lower);
-        }
-        unregister_code(KC_LALT);
-    }
-    return false;
-}
-
-void tap_alt_code(uint16_t *alt_code) {
-    for (uint8_t index = 0; alt_code[index] != 0; ++index) {
-        tap_code(alt_code[index]);
-    }
-}
