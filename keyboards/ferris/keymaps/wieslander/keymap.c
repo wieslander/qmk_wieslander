@@ -11,8 +11,7 @@ enum layers {
 };
 
 enum custom_keycodes {
-    NEXTSEN = SAFE_RANGE,
-    CLEAR,
+    CLEAR = SAFE_RANGE,
     WIN_ARING,
     WIN_OUML,
     WIN_AUML,
@@ -39,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  TO(BASE),   KC_0,     KC_2,     KC_4,     KC_6,     KC_8,
         OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, TO(WIN),    EQL_PAD,  KC_COLN,  KC_COMM,  KC_SCLN,  KC_MINS,
         G(KC_Z),  G(KC_X),  G(KC_C),  TT(NAV),  G(KC_V),    KC_PIPE,  KC_SLSH,  KC_QUOT,  KC_TILD,  KC_BSLS,
-                                      ___,      ___,        NEXTSEN,  MO(FUN)
+                                      ___,      ___,        KC_ENT,   MO(FUN)
     ),
     [SYM] = LAYOUT(
         KC_7,     KC_5,     KC_3,     KC_1,     KC_9,       XXX,      XXX,      XXX,      XXX,      XXX,
@@ -57,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXX,      ___,      XXX,      XXX,      ___,        KC_PGDN,  KC_HOME,  KC_END,   KC_PGUP,  XXX,
         OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, XXX,        KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  XXX,
         G(KC_Z),  G(KC_X),  G(KC_C),  XXX,      G(KC_V),    XXX,      XXX,      XXX,      XXX,      XXX,
-                                      ___,      ___,        NEXTSEN,  MO(FUN)
+                                      ___,      ___,        KC_ENT,   MO(FUN)
     ),
     [FUN] = LAYOUT(
         KC_F9,    KC_F10,   KC_F11,   KC_F12,   XXX,        ___,      QK_BOOT,  QK_MAKE,  ___,      ___,
@@ -91,12 +90,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_tap_or_long_press_send_string(record, "../");
         case EQL_PAD:
             return process_tap_or_long_press_send_string(record, " = ");
-        case NEXTSEN:  // Next sentence macro.
-            if (record->event.pressed) {
-                SEND_STRING(". ");
-                add_oneshot_mods(MOD_BIT(KC_LSFT));  // Set one-shot mod for shift.
-            }
-            return false;
         case CLEAR:
             if (record->event.pressed) {
                 clear_keyboard();
