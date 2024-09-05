@@ -56,6 +56,14 @@ bool process_win_alt_keycodes(keyrecord_t *record, uint16_t *alt_code_lower, uin
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case SFT_REP:
+            if (record->tap.count) {
+                if (process_last_key(QK_REP, record)) {
+                    process_repeat_key(QK_REP, record);
+                }
+                return false;
+            }
+            return true;
         case DOT_CDUP:
             return process_tap_or_long_press_send_string(record, "../");
         case EQL_PAD:
@@ -74,6 +82,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_win_alt_keycodes(record, WIN_OUML_LOWER, WIN_OUML_UPPER);
     }
     return true;
+}
+
+bool remember_last_key_user(uint16_t keycode, keyrecord_t *record, uint8_t *remembered_mods) {
+    return keycode != SFT_REP;
 }
 
 bool process_detected_host_os_user(os_variant_t detected_os) {
