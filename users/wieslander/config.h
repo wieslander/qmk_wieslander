@@ -1,0 +1,5 @@
+#pragma once
+
+#define TAPPING_TOGGLE 1
+#define ENABLE_COMPILE_KEYCODE
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
