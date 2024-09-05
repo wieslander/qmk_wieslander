@@ -85,7 +85,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool remember_last_key_user(uint16_t keycode, keyrecord_t *record, uint8_t *remembered_mods) {
-    return keycode != SFT_REP;
+    switch (keycode) {
+        case SFT_REP:
+            return false;
+        case KC_A ... KC_Z:
+        case KC_1 ... KC_0:
+        case KC_ENT ... KC_SLASH:
+            if ((*remembered_mods & ~MOD_MASK_SHIFT) == 0) {
+                return false;
+            }
+    }
+
+    return true;
 }
 
 bool process_detected_host_os_user(os_variant_t detected_os) {
