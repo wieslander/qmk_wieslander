@@ -3,6 +3,7 @@
 #include "custom_keycodes.h"
 #include "layers.h"
 #include "wieslander.h"
+#include "features/shift_repeat.h"
 
 bool     num_lock          = false;
 uint16_t WIN_ARING_UPPER[] = {KC_P1, KC_P4, KC_P3, 0};
@@ -55,15 +56,11 @@ bool process_win_alt_keycodes(keyrecord_t *record, uint16_t *alt_code_lower, uin
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_shift_repeat(keycode, record)) {
+        return false;
+    }
+
     switch (keycode) {
-        case SFT_REP:
-            if (record->tap.count) {
-                if (process_last_key(QK_REP, record)) {
-                    process_repeat_key(QK_REP, record);
-                }
-                return false;
-            }
-            return true;
         case DOT_CDUP:
             return process_tap_or_long_press_send_string(record, "../");
         case EQL_PAD:
@@ -81,21 +78,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case WIN_OUML:
             return process_win_alt_keycodes(record, WIN_OUML_LOWER, WIN_OUML_UPPER);
     }
-    return true;
-}
-
-bool remember_last_key_user(uint16_t keycode, keyrecord_t *record, uint8_t *remembered_mods) {
-    switch (keycode) {
-        case SFT_REP:
-            return false;
-        case KC_A ... KC_Z:
-        case KC_1 ... KC_0:
-        case KC_ENT ... KC_SLASH:
-            if ((*remembered_mods & ~MOD_MASK_SHIFT) == 0) {
-                return false;
-            }
-    }
-
     return true;
 }
 

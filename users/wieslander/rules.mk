@@ -4,4 +4,5 @@ OS_DETECTION_ENABLE = yes
 COMBO_ENABLE = yes
 VPATH += keyboards/gboards/
 
-SRC += wieslander.c
+SRC += wieslander.c \
+	   features/shift_repeat.c
