@@ -1,6 +1,7 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
+#include "layers.h"
 
 enum custom_keycodes {
     CLEAR = SAFE_RANGE,
@@ -28,4 +29,4 @@ enum custom_keycodes {
 #define DOT_CDUP LT(0, KC_DOT)
 #define EQL_PAD LT(0, KC_EQL)
 
-#define SFT_REP LSFT_T(QK_REP)
+#define SYM_REP LT(SYM, QK_REP)

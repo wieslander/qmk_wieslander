@@ -5,4 +5,4 @@ COMBO_ENABLE = yes
 VPATH += keyboards/gboards/
 
 SRC += wieslander.c \
-	   features/shift_repeat.c
+	   features/lt_repeat.c
