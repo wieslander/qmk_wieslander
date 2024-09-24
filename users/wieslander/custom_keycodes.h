@@ -28,5 +28,6 @@ enum custom_keycodes {
 
 #define DOT_CDUP LT(0, KC_DOT)
 #define EQL_PAD LT(0, KC_EQL)
+#define SFT_CW LSFT_T(CW_TOGG)
 
 #define SYM_REP LT(SYM, QK_REP)
