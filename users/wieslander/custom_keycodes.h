@@ -31,4 +31,5 @@ enum custom_keycodes {
 #define SFT_CW LSFT_T(CW_TOGG)
 
 #define SYM_REP LT(SYM, QK_REP)
-#define NUM_ENT LT(NUM, KC_ENT)
+#define NAV_ENT LT(NAV, KC_ENT)
+#define FUN_BSP LT(FUN, KC_BSPC)
