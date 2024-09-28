@@ -33,9 +33,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       NUM_ENT,  KC_BSPC,    ___,      ___
     ),
     [NUM] = LAYOUT(
-        XXX,      XXX,      XXX,      XXX,      XXX,        KC_COLN,  KC_7,     KC_8,     KC_9,     KC_EQL,
+        G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  G(KC_B),    KC_COLN,  KC_7,     KC_8,     KC_9,     KC_EQL,
         OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, XXX,        KC_COMM,  KC_4,     KC_5,     KC_6,     KC_MINS,
-        XXX,      XXX,      XXX,      TT(NAV),  XXX,        KC_DOT,   KC_1,     KC_2,     KC_3,     KC_SLSH,
+        G(KC_Z),  G(KC_X),  G(KC_C),  TT(NAV),  G(KC_V),    KC_DOT,   KC_1,     KC_2,     KC_3,     KC_SLSH,
                                       ___,      ___,        KC_SPC,   KC_0
     ),
     [NAV] = LAYOUT(
