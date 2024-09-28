@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         G(KC_Q),  G(KC_W),  G(KC_F),  G(KC_P),  TO(BASE),   KC_0,     KC_2,     KC_4,     KC_6,     KC_8,
         OSM_LCTL, OSM_LOPT, OSM_LCMD, OSM_LSFT, TO(WIN),    EQL_PAD,  KC_COLN,  XXX,      KC_SCLN,  KC_MINS,
         G(KC_Z),  G(KC_X),  G(KC_C),  TT(NAV),  G(KC_V),    KC_PIPE,  KC_SLSH,  XXX,      KC_TILD,  KC_BSLS,
-                                      ___,      ___,        KC_ENT,   MO(FUN)
+                                      ___,      ___,        ___,      MO(FUN)
     ),
     [SYM] = LAYOUT(
         KC_7,     KC_5,     KC_3,     KC_1,     KC_9,       XXX,      XXX,      XXX,      XXX,      XXX,
