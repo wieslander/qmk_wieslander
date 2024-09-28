@@ -33,3 +33,4 @@ enum custom_keycodes {
 #define SYM_REP LT(SYM, QK_REP)
 #define NAV_ENT LT(NAV, KC_ENT)
 #define FUN_BSP LT(FUN, KC_BSPC)
+#define NUMWORD LT(NUM, KC_NO)

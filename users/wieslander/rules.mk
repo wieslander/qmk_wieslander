@@ -7,4 +7,5 @@ VPATH += keyboards/gboards/
 SRC += wieslander.c \
 	   features/lt_repeat.c \
 	   features/shift_caps_word.c \
-	   features/modtap.c
+	   features/modtap.c \
+	   features/numword.c

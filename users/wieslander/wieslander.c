@@ -5,6 +5,7 @@
 #include "wieslander.h"
 #include "features/lt_repeat.h"
 #include "features/shift_caps_word.h"
+#include "features/numword.h"
 
 bool     num_lock          = false;
 uint16_t WIN_ARING_UPPER[] = {KC_P1, KC_P4, KC_P3, 0};
@@ -61,6 +62,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
     if (!process_shift_caps_word(keycode, record)) {
+        return false;
+    }
+    if (!process_numword(keycode, record)) {
         return false;
     }
 
